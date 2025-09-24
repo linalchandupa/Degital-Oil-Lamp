@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jasper 2025 - Research Symposium</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body {
     padding: 0;
@@ -12,48 +13,136 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: black;
+    background: #ffd6de;
     overflow: hidden;
     flex-direction: column;
+    cursor: none;
   }
+
   #particles-js {
     position: fixed;
-    top: -20;
+    top: -20px;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
   }
+
   .title {
-    margin-top: 200px;
-    font-family: Helvetica, Arial, sans-serif;
+    margin-top: 190px;
     text-align: center;
     z-index: 2;
     position: relative;
     line-height: 1.3;
   }
-  .title .main { font-size: 70px; font-weight: bold; color: #EC0000; display: block; }
-  .title .sub { font-size: 50px; font-weight: bold; color: #FF69B4; display: block; }
-  .title .partnership { font-size: 30px; font-weight: normal; color: #ffffff; display: block; margin-top: 10px; }
-  .wave-container { position: relative; width: 100%; height: 100%; z-index: 1; }
-  .lamp-container { position: absolute; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-  .lamp-img, .lamp-gif { position: absolute; width: 100px; height: 100px; object-fit: contain; pointer-events: none; }
-  .lamp-img { filter: hue-rotate(130deg) saturate(2) brightness(1); }
-  .lamp-gif { display: none; filter: hue-rotate(130deg) saturate(2) brightness(1); opacity: 1; }
+
+  .title .main { 
+    font-size: 60px; 
+    font-weight: bold; 
+    font-family:'Lora'; 
+    color: #EC0000; 
+    display: block; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.804);
+  }
+
+  .title .sub { 
+    font-size: 40px; 
+    font-weight: bold; 
+    font-family: Helvetica, sans-serif; 
+    color: #000000; 
+    display: block; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.459); 
+  }
+
+  .title .partnership { 
+    font-size: 20px; 
+    font-weight: normal; 
+    font-family: Helvetica, sans-serif; 
+    color: #000000; 
+    display: block; 
+    margin-top: 10px; 
+  }
+
+  .wave-container { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 1; 
+  }
+
+  .lamp-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .lamp-img,
+  .lamp-base {
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .lamp-img {
+    z-index: 1;
+    filter: hue-rotate(180deg) saturate(3) brightness(0.9);
+  }
+
+  .lamp-base {
+    display: none;
+    z-index: 2;
+    filter: hue-rotate(180deg) saturate(3) brightness(0.9);
+  }
+
   .sakura { position: fixed; width: 300px; height: auto; z-index: 1; }
-  .sakura.left { bottom: -80px; left: 0; }
-  .sakura.right { bottom: -80px; right: 0; transform: scaleX(-1); }
-  .corner { position: absolute; top: 30px; width: 150px; z-index: 5; }
-  .corner.left { left: 30px; }
-  .corner.right { right: 30px; }
-  .logo { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 300px; z-index: 5; }
+  .sakura.left { bottom: 10px; left: 0; }
+  .sakura.right { bottom: 10px; right: 0; transform: scaleX(-1); }
+
+  .corner { 
+    position: absolute; 
+    top: 50px; 
+    width: 150px; 
+    z-index: 5; 
+  }
+  .corner.left { left: 50px; }
+  .corner.right { right: 50px; }
+
+  .logo-container {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0px;
+    z-index: 5;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+
+  .logo { width: 250px; height: auto; display: block; padding: 0; }
+
+  #candle-cursor {
+    position: fixed;
+    width: 130px;
+    height: 80px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%) rotate(-50deg);
+  }
 </style>
 </head>
 <body>
 <div id="particles-js"></div>
+
 <img src="srilanka.gif" alt="Sri Lanka Flag" class="corner left">
-<img src="logo.png" alt="Logo" class="logo">
 <img src="japan.gif" alt="Japan Flag" class="corner right">
+
+<div class="logo-container">
+  <img src="logo.png" alt="Logo" class="logo">
+</div>
 
 <div class="title">
   <span class="main">JASPER 2025</span>
@@ -63,53 +152,88 @@
 
 <div class="wave-container"></div>
 
-<img src="saku.gif" alt="Sakura" class="sakura left">
-<img src="saku.gif" alt="Sakura" class="sakura right">
+<img src="saki.gif" alt="Sakura" class="sakura left">
+<img src="saki.gif" alt="Sakura" class="sakura right">
+
+<img src="dan.gif" id="candle-cursor" alt="Candle Cursor">
 
 <script src="particles.min.js"></script>
 <script>
-const container = document.querySelector('.wave-container');
-const numLamps = 12;
-const lampWidth = 90;
-const screenPadding = 10;
-const archWidth = window.innerWidth - 2 * screenPadding - lampWidth; 
-const spacing = archWidth / (numLamps);
-const baseY = -80;
-const archHeight = 180;
+function createCurveLamps(numLamps, lampSize, offsetY, margin, curveHeight) {
+  const container = document.querySelector('.wave-container');
+  const lampWidth = lampSize;
+  const leftEdge = margin;
+  const rightEdge = window.innerWidth - margin - lampWidth;
 
-for (let i = 0; i < numLamps; i++) {
-  const x = screenPadding + (lampWidth / 2) + i * spacing;
-  const progress = (i / (numLamps - 1)) * Math.PI;
-  const y = baseY + Math.sin(progress) * archHeight;
+  // Generate lamps evenly along the curve using sine distribution
+  for (let i = 0; i < numLamps; i++) {
+    const t = i / (numLamps - 1); // normalized [0,1]
+    // Map t to x positions proportionally along the sine curve
+    const x = leftEdge + t * (rightEdge - leftEdge);
+    const y = offsetY + Math.sin(t * Math.PI) * curveHeight;
 
-  const lampContainer = document.createElement('div');
-  lampContainer.className = 'lamp-container';
-  lampContainer.style.left = `${x}px`;
-  lampContainer.style.top = `${y}px`;
+    const lampContainer = document.createElement('div');
+    lampContainer.className = 'lamp-container';
+    lampContainer.style.width = lampSize + "px";
+    lampContainer.style.height = lampSize + "px";
+    lampContainer.style.left = `${x}px`;
+    lampContainer.style.top = `${y}px`;
 
-  const lampImg = document.createElement('img');
-  lampImg.src = 'lamp.png';
-  lampImg.className = 'lamp-img';
-  lampContainer.appendChild(lampImg);
+    const lampImg = document.createElement('img');
+    lampImg.src = 'lamp.png';
+    lampImg.className = 'lamp-img';
+    lampImg.style.width = lampSize + "px";
+    lampImg.style.height = lampSize + "px";
+    lampContainer.appendChild(lampImg);
 
-  const lampGif = document.createElement('img');
-  lampGif.src = 'lamp.gif';
-  lampGif.className = 'lamp-gif';
-  lampContainer.appendChild(lampGif);
+    const lampBase = document.createElement('img');
+    lampBase.src = 'lamp01.gif';
+    lampBase.className = 'lamp-base';
+    lampBase.style.width = lampSize + "px";
+    lampBase.style.height = lampSize + "px";
+    lampContainer.appendChild(lampBase);
 
-  lampContainer.addEventListener('click', () => {
-    const isGif = lampGif.style.display === 'block';
-    lampGif.style.display = isGif ? 'none' : 'block';
-    lampImg.style.display = isGif ? 'block' : 'none';
-  });
+    lampContainer.addEventListener('click', () => {
+      const isLit = lampBase.style.display === 'block';
+      if (isLit) {
+        lampBase.style.display = 'none';
+        lampImg.style.display = 'block';
+      } else {
+        lampBase.style.display = 'block';
+        lampImg.style.display = 'none';
+      }
+    });
 
-  container.appendChild(lampContainer);
+    container.appendChild(lampContainer);
+  }
 }
 
+function createLamps() {
+  const container = document.querySelector('.wave-container');
+  container.innerHTML = '';
+
+  // Bottom row
+  createCurveLamps(7, 150, -130, 0, 420);
+
+  // Top row
+  createCurveLamps(5, 130, -180, 200, 280);
+}
+
+createLamps();
+window.addEventListener('resize', createLamps);
+
+// Candle cursor
+const candle = document.getElementById("candle-cursor");
+document.addEventListener("mousemove", (e) => {
+  candle.style.left = e.clientX + "px";
+  candle.style.top = e.clientY + "px";
+});
+
+// Particles
 particlesJS("particles-js", {
   "particles": {
     "number": { "value": 100 },
-    "color": { "value": "#FFB3DE" },
+    "color": { "value": "#FA73CE" },
     "shape": { "type": "circle" },
     "opacity": { "value": 0.6 },
     "size": { "value": 3 },
