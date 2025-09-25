@@ -93,7 +93,13 @@
   .lamp-base {
     display: none;
     z-index: 2;
+    filter: hue-rotate(0deg) saturate(3) brightness(0.9);
+  }
+  
+  .lamp-img2 {
+    z-index: 3;
     filter: hue-rotate(180deg) saturate(3) brightness(0.9);
+	opacity: 0.75;
   }
 
   .sakura { position: fixed; width: 300px; height: auto; z-index: 1; }
@@ -192,15 +198,24 @@ function createCurveLamps(numLamps, lampSize, offsetY, margin, curveHeight) {
     lampBase.style.width = lampSize + "px";
     lampBase.style.height = lampSize + "px";
     lampContainer.appendChild(lampBase);
+	
+	const lampImg2 = document.createElement('img');
+    lampImg2.src = 'lamp.png';
+    lampImg2.className = 'lamp-img2';
+    lampImg2.style.width = lampSize + "px";
+    lampImg2.style.height = lampSize + "px";
+    lampContainer.appendChild(lampImg2);
 
     lampContainer.addEventListener('click', () => {
       const isLit = lampBase.style.display === 'block';
       if (isLit) {
         lampBase.style.display = 'none';
         lampImg.style.display = 'block';
+		lampImg2.style.display = 'block';
       } else {
         lampBase.style.display = 'block';
         lampImg.style.display = 'none';
+		lampImg2.style.display = 'block';
       }
     });
 
@@ -213,10 +228,12 @@ function createLamps() {
   container.innerHTML = '';
 
   // Bottom row
-  createCurveLamps(7, 150, -130, 0, 420);
+  //createCurveLamps(7, 150, 100, 0, 420);
+  createCurveLamps(7, 150, -60, 0, 250);
 
   // Top row
-  createCurveLamps(5, 130, -180, 200, 280);
+  //createCurveLamps(5, 130, 20, 200, 280);
+  createCurveLamps(5, 130, -110, 200, 200);
 }
 
 createLamps();
