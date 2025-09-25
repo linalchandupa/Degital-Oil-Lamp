@@ -29,7 +29,7 @@
   }
 
   .title {
-    margin-top: 190px;
+    margin-top: 160px;
     text-align: center;
     z-index: 2;
     position: relative;
@@ -99,7 +99,7 @@
   .lamp-img2 {
     z-index: 3;
     filter: hue-rotate(180deg) saturate(3) brightness(0.9);
-	opacity: 0.75;
+	  opacity: 0.75;
   }
 
   .sakura { position: fixed; width: 300px; height: auto; z-index: 1; }
@@ -117,7 +117,7 @@
 
   .logo-container {
     position: absolute;
-    top: 100px;
+    top: 70px;
     left: 50%;
     transform: translateX(-50%);
     padding: 0px;
@@ -173,8 +173,7 @@ function createCurveLamps(numLamps, lampSize, offsetY, margin, curveHeight) {
 
   // Generate lamps evenly along the curve using sine distribution
   for (let i = 0; i < numLamps; i++) {
-    const t = i / (numLamps - 1); // normalized [0,1]
-    // Map t to x positions proportionally along the sine curve
+    const t = i / (numLamps - 1); 
     const x = leftEdge + t * (rightEdge - leftEdge);
     const y = offsetY + Math.sin(t * Math.PI) * curveHeight;
 
@@ -211,11 +210,11 @@ function createCurveLamps(numLamps, lampSize, offsetY, margin, curveHeight) {
       if (isLit) {
         lampBase.style.display = 'none';
         lampImg.style.display = 'block';
-		lampImg2.style.display = 'block';
+		    lampImg2.style.display = 'block';
       } else {
         lampBase.style.display = 'block';
         lampImg.style.display = 'none';
-		lampImg2.style.display = 'block';
+		    lampImg2.style.display = 'block';
       }
     });
 
@@ -223,17 +222,68 @@ function createCurveLamps(numLamps, lampSize, offsetY, margin, curveHeight) {
   }
 }
 
+// 🔥 Single center lamp
+function createSingleLamp(x, y, size) {
+  const container = document.querySelector('.wave-container');
+
+  const lampContainer = document.createElement('div');
+  lampContainer.className = 'lamp-container';
+  lampContainer.style.width = size + "px";
+  lampContainer.style.height = size + "px";
+  lampContainer.style.left = `${x}px`;
+  lampContainer.style.top = `${y}px`;
+
+  const lampImg = document.createElement('img');
+  lampImg.src = 'lamp.png';
+  lampImg.className = 'lamp-img';
+  lampImg.style.width = size + "px";
+  lampImg.style.height = size + "px";
+  lampContainer.appendChild(lampImg);
+
+  const lampBase = document.createElement('img');
+  lampBase.src = 'lamp01.gif';
+  lampBase.className = 'lamp-base';
+  lampBase.style.width = size + "px";
+  lampBase.style.height = size + "px";
+  lampContainer.appendChild(lampBase);
+
+  const lampImg2 = document.createElement('img');
+  lampImg2.src = 'lamp.png';
+  lampImg2.className = 'lamp-img2';
+  lampImg2.style.width = size + "px";
+  lampImg2.style.height = size + "px";
+  lampContainer.appendChild(lampImg2);
+
+  lampContainer.addEventListener('click', () => {
+    const isLit = lampBase.style.display === 'block';
+    if (isLit) {
+      lampBase.style.display = 'none';
+      lampImg.style.display = 'block';
+      lampImg2.style.display = 'block';
+    } else {
+      lampBase.style.display = 'block';
+      lampImg.style.display = 'none';
+      lampImg2.style.display = 'block';
+    }
+  });
+
+  container.appendChild(lampContainer);
+}
+
 function createLamps() {
   const container = document.querySelector('.wave-container');
   container.innerHTML = '';
 
   // Bottom row
-  //createCurveLamps(7, 150, 100, 0, 420);
-  createCurveLamps(7, 150, -60, 0, 250);
+  createCurveLamps(7, 150, 0, 0, 250);
 
   // Top row
-  //createCurveLamps(5, 130, 20, 200, 280);
-  createCurveLamps(5, 130, -110, 200, 200);
+  createCurveLamps(5, 130, -50, 200, 200);
+
+  // Extra center lamp
+  const x = window.innerWidth / 2 - 60; // center horizontally
+  const y = 30; // higher than both curves
+  createSingleLamp(x, y, 110);
 }
 
 createLamps();
